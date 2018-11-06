@@ -36,8 +36,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
-        //View view = inflater.inflate(R.layout.fragment_gender_list, container, false);
         GenderDbHelper db = new GenderDbHelper(this);
         ArrayList<GenderDbHelper.GenderEntry> items = db.select();
         db.close();
