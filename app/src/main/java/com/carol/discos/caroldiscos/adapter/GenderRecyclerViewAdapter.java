@@ -1,4 +1,4 @@
-package com.carol.discos.caroldiscos.ui;
+package com.carol.discos.caroldiscos.adapter;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -20,7 +20,7 @@ import com.carol.discos.caroldiscos.db.GenderEntry;
 import java.util.List;
 
 /**
- * {@link RecyclerView.Adapter} that can display a {@link GenderEntry} 
+ * {@link RecyclerView.Adapter} that can display a {@link GenderEntry}
  * TODO: Replace the implementation with code for your data type.
  */
 public class GenderRecyclerViewAdapter extends RecyclerView.Adapter<GenderRecyclerViewAdapter.ViewHolder> {

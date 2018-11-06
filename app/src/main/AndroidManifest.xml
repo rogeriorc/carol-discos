@@ -20,7 +20,9 @@
         <activity
             android:name=".GenderEditActivity"
             android:label="@string/title_activity_gender_edit"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:parentActivityName=".GenderListActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
     </application>
 
 </manifest>

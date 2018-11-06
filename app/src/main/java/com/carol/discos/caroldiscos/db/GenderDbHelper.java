@@ -5,7 +5,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.provider.BaseColumns;
 
 import java.util.ArrayList;
 
@@ -160,6 +159,7 @@ public class GenderDbHelper extends SQLiteOpenHelper {
 
 
     /* Inner class that defines the table contents */
+/*
     public static class GenderEntry implements BaseColumns {
         public static final String TABLE_NAME = "gender";
         public static final String COLUMN_NAME_ID = _ID;
@@ -170,6 +170,6 @@ public class GenderDbHelper extends SQLiteOpenHelper {
         public String name;
         public String description;
     }
-
+*/
 
 }

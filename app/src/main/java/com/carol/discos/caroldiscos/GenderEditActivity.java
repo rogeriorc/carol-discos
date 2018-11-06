@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.carol.discos.caroldiscos.db.GenderDbHelper;
+import com.carol.discos.caroldiscos.db.GenderEntry;
 
 public class GenderEditActivity extends AppCompatActivity {
 
@@ -25,8 +26,9 @@ public class GenderEditActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-            Button btnOk = findViewById(R.id.button_ok);
+        Button btnOk = findViewById(R.id.button_ok);
 
         textName = findViewById(R.id.edit_gender_name);
         textDesc = findViewById(R.id.edit_gender_desc);
@@ -35,11 +37,11 @@ public class GenderEditActivity extends AppCompatActivity {
 
         if (intent.getAction() == Intent.ACTION_EDIT) {
             textName.setText(
-                    intent.getStringExtra(GenderDbHelper.GenderEntry.COLUMN_NAME_NAME)
+                    intent.getStringExtra(GenderEntry.COLUMN_NAME_NAME)
             );
 
             textDesc.setText(
-                    intent.getStringExtra(GenderDbHelper.GenderEntry.COLUMN_NAME_DESCRIPTION)
+                    intent.getStringExtra(GenderEntry.COLUMN_NAME_DESCRIPTION)
             );
         }
 
@@ -55,7 +57,7 @@ public class GenderEditActivity extends AppCompatActivity {
                     helper.insert(name, desc);
                 }
                 else if (intent.getAction() == Intent.ACTION_EDIT) {
-                    long id = intent.getLongExtra(GenderDbHelper.GenderEntry.COLUMN_NAME_ID, 0);
+                    long id = intent.getLongExtra(GenderEntry.COLUMN_NAME_ID, 0);
 
                     helper.update(id, name, desc);
                 }
