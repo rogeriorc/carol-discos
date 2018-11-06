@@ -3,4 +3,5 @@
     <string name="title_activity_main">MainActivity</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_gender_edit">GenderEditActivity</string>
+    <string name="title_activity_album_edit">AlbumEditActivity</string>
 </resources>

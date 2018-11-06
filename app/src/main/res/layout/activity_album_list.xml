@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".GenderListActivity">
+    tools:context=".AlbumListActivity">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -27,7 +27,7 @@
         android:orientation="vertical">
 
         <android.support.v7.widget.RecyclerView
-            android:id="@+id/list_gender"
+            android:id="@+id/list_album"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginLeft="16dp"

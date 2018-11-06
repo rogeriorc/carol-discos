@@ -11,6 +11,7 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".GenderListActivity"
+            android:label="Generos"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -21,6 +22,21 @@
             android:name=".GenderEditActivity"
             android:label="@string/title_activity_gender_edit"
             android:parentActivityName=".GenderListActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+        <activity
+            android:name=".AlbumListActivity"
+            android:label="Albuns"
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".AlbumEditActivity"
+            android:label="@string/title_activity_album_edit"
+            android:parentActivityName=".AlbumListActivity"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
     </application>

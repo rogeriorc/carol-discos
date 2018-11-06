@@ -57,8 +57,8 @@ public class GenderRecyclerViewAdapter extends RecyclerView.Adapter<GenderRecycl
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
-        holder.mIdView.setText(mValues.get(position).name);
-        holder.mContentView.setText(mValues.get(position).description);
+        holder.mTitleView.setText(mValues.get(position).title);
+        holder.mDescriptionView.setText(mValues.get(position).description);
     }
 
     @Override
@@ -68,8 +68,8 @@ public class GenderRecyclerViewAdapter extends RecyclerView.Adapter<GenderRecycl
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnCreateContextMenuListener, MenuItem.OnMenuItemClickListener {
         public final View mView;
-        public final TextView mIdView;
-        public final TextView mContentView;
+        public final TextView mTitleView;
+        public final TextView mDescriptionView;
         public GenderEntry mItem;
 
         public ViewHolder(View view) {
@@ -78,13 +78,13 @@ public class GenderRecyclerViewAdapter extends RecyclerView.Adapter<GenderRecycl
 
             view.setOnCreateContextMenuListener(this);
 
-            mIdView = (TextView) view.findViewById(android.R.id.text1);
-            mContentView = (TextView) view.findViewById(android.R.id.text2);
+            mTitleView = (TextView) view.findViewById(android.R.id.text1);
+            mDescriptionView = (TextView) view.findViewById(android.R.id.text2);
         }
 
         @Override
         public String toString() {
-            return super.toString() + " '" + mContentView.getText() + "'";
+            return super.toString() + " '" + mDescriptionView.getText() + "'";
         }
 
         @Override
@@ -104,7 +104,7 @@ public class GenderRecyclerViewAdapter extends RecyclerView.Adapter<GenderRecycl
             if (item.getItemId() == 1) {
                 Intent intent = new Intent(mView.getContext(), GenderEditActivity.class);
                 intent.setAction(Intent.ACTION_EDIT);
-                intent.putExtra(GenderEntry.COLUMN_NAME_NAME, mItem.name);
+                intent.putExtra(GenderEntry.COLUMN_NAME_TITLE, mItem.title);
                 intent.putExtra(GenderEntry.COLUMN_NAME_DESCRIPTION, mItem.description);
                 intent.putExtra(GenderEntry.COLUMN_NAME_ID, mItem.id);
 
@@ -115,7 +115,7 @@ public class GenderRecyclerViewAdapter extends RecyclerView.Adapter<GenderRecycl
                 AlertDialog.Builder builder = new AlertDialog.Builder(mView.getContext());
                 builder.setTitle("Exclusao");
                 //define a mensagem
-                builder.setMessage("Deseja deletar o Genero '" + mItem.name + "'?");
+                builder.setMessage("Deseja deletar o Genero '" + mItem.title + "'?");
 
                 builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
 

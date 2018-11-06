@@ -20,8 +20,8 @@ public class GenderDbHelper extends SQLiteOpenHelper {
 
     private static final String SQL_CREATE_ENTRIES =
             "CREATE TABLE " + GenderEntry.TABLE_NAME + " (" +
-                    GenderEntry._ID + " INTEGER PRIMARY KEY," +
-                    GenderEntry.COLUMN_NAME_NAME + " TEXT," +
+                    GenderEntry.COLUMN_NAME_ID + " INTEGER PRIMARY KEY," +
+                    GenderEntry.COLUMN_NAME_TITLE + " TEXT," +
                     GenderEntry.COLUMN_NAME_DESCRIPTION + " TEXT)";
 
     private static final String SQL_DELETE_ENTRIES =
@@ -51,7 +51,7 @@ public class GenderDbHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
-        values.put(GenderEntry.COLUMN_NAME_NAME, name);
+        values.put(GenderEntry.COLUMN_NAME_TITLE, name);
         values.put(GenderEntry.COLUMN_NAME_DESCRIPTION, desc);
 
         // Insert the new row, returning the primary key value of the new row
@@ -67,11 +67,11 @@ public class GenderDbHelper extends SQLiteOpenHelper {
 
         // New value for one column
         ContentValues values = new ContentValues();
-        values.put(GenderEntry.COLUMN_NAME_NAME, name);
+        values.put(GenderEntry.COLUMN_NAME_TITLE, name);
         values.put(GenderEntry.COLUMN_NAME_DESCRIPTION, desc);
 
         // Which row to update, based on the title
-        String selection = GenderEntry._ID + " = ?";
+        String selection = GenderEntry.COLUMN_NAME_ID + " = ?";
         String[] selectionArgs = { String.valueOf(id) };
 
         int count = db.update(
@@ -88,7 +88,7 @@ public class GenderDbHelper extends SQLiteOpenHelper {
 
     public boolean delete(long id) {
         SQLiteDatabase db = this.getWritableDatabase();
-        String selection = GenderEntry._ID + " = ?";
+        String selection = GenderEntry.COLUMN_NAME_ID + " = ?";
 
         // Specify arguments in placeholder order.
         String[] selectionArgs = { String.valueOf(id) };
@@ -109,17 +109,17 @@ public class GenderDbHelper extends SQLiteOpenHelper {
         // Define a projection that specifies which columns from the database
         // you will actually use after this query.
         String[] projection = {
-                GenderEntry._ID,
-                GenderEntry.COLUMN_NAME_NAME,
+                GenderEntry.COLUMN_NAME_ID,
+                GenderEntry.COLUMN_NAME_TITLE,
                 GenderEntry.COLUMN_NAME_DESCRIPTION
         };
 
         // Filter results WHERE "title" = 'My Title'
-        //String selection = GenderEntry.COLUMN_NAME_NAME + " = ?";
+        //String selection = GenderEntry.COLUMN_NAME_TITLE + " = ?";
         //String[] selectionArgs = {"My Title"};
 
         // How you want the results sorted in the resulting Cursor
-        String sortOrder = GenderEntry.COLUMN_NAME_NAME + " DESC";
+        String sortOrder = GenderEntry.COLUMN_NAME_TITLE + " DESC";
 
         Cursor cursor = db.query(
                 GenderEntry.TABLE_NAME,   // The table to query
@@ -135,11 +135,11 @@ public class GenderDbHelper extends SQLiteOpenHelper {
             GenderEntry item = new GenderEntry();
 
             item.id = cursor.getLong(
-                    cursor.getColumnIndexOrThrow(GenderEntry._ID)
+                    cursor.getColumnIndexOrThrow(GenderEntry.COLUMN_NAME_ID)
             );
 
-            item.name = cursor.getString(
-                    cursor.getColumnIndexOrThrow(GenderEntry.COLUMN_NAME_NAME)
+            item.title = cursor.getString(
+                    cursor.getColumnIndexOrThrow(GenderEntry.COLUMN_NAME_TITLE)
             );
 
             item.description = cursor.getString(
@@ -153,23 +153,5 @@ public class GenderDbHelper extends SQLiteOpenHelper {
 
         return items;
     }
-
-
-
-
-
-    /* Inner class that defines the table contents */
-/*
-    public static class GenderEntry implements BaseColumns {
-        public static final String TABLE_NAME = "gender";
-        public static final String COLUMN_NAME_ID = _ID;
-        public static final String COLUMN_NAME_NAME = "title";
-        public static final String COLUMN_NAME_DESCRIPTION = "description";
-
-        public long id;
-        public String name;
-        public String description;
-    }
-*/
 
 }

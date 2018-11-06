@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".GenderEditActivity">
+    tools:context=".AlbumEditActivity">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -33,13 +33,13 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/textView2"
+                android:id="@+id/textView1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Gênero" />
+                android:text="Titulo" />
 
             <EditText
-                android:id="@+id/edit_gender_name"
+                android:id="@+id/edit_album_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
@@ -47,18 +47,46 @@
                 android:text="" />
 
             <TextView
-                android:id="@+id/textView"
+                android:id="@+id/textView2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Descricao" />
+                android:text="Artista" />
 
             <EditText
-                android:id="@+id/edit_gender_desc"
+                android:id="@+id/edit_album_artist"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:inputType="textPersonName"
                 android:text="" />
+
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Ano" />
+
+            <EditText
+                android:id="@+id/edit_album_year"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="number"
+                android:text="" />
+
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Genero" />
+
+            <Spinner
+                android:id="@+id/spinner_album_genre"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="" />
+
         </LinearLayout>
 
 
