@@ -4,9 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -17,12 +15,15 @@ import com.carol.discos.caroldiscos.ui.GenderRecyclerViewAdapter;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity {
+public class GenderListActivity extends AppCompatActivity {
+
+    private RecyclerView mRecyclerView;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_gender_list);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -30,9 +31,10 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, GenderEditActivity.class);
+                Intent intent = new Intent(GenderListActivity.this, GenderEditActivity.class);
+                intent.setAction(Intent.ACTION_INSERT);
 
-                MainActivity.this.startActivity(intent);
+                GenderListActivity.this.startActivityForResult(intent, 0);
             }
         });
 
@@ -40,12 +42,20 @@ public class MainActivity extends AppCompatActivity {
         ArrayList<GenderDbHelper.GenderEntry> items = db.select();
         db.close();
 
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.list_gender);
+        mRecyclerView = (RecyclerView) findViewById(R.id.list_gender);
 
-        Context context = recyclerView.getContext();
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        mRecyclerView.setAdapter(new GenderRecyclerViewAdapter(items, this));
+    }
 
-        recyclerView.setLayoutManager(new LinearLayoutManager(context));
-        recyclerView.setAdapter(new GenderRecyclerViewAdapter(items, this));
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode == RESULT_OK) {
+            GenderRecyclerViewAdapter adapter = (GenderRecyclerViewAdapter) mRecyclerView.getAdapter();
+
+            adapter.refresh();
+        }
     }
 
 }

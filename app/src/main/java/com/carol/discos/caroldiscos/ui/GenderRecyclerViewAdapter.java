@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
@@ -12,10 +13,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.carol.discos.caroldiscos.GenderEditActivity;
 import com.carol.discos.caroldiscos.db.GenderDbHelper;
 import com.carol.discos.caroldiscos.db.GenderDbHelper.GenderEntry;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -66,7 +67,7 @@ public class GenderRecyclerViewAdapter extends RecyclerView.Adapter<GenderRecycl
         return mValues.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder  implements View.OnCreateContextMenuListener, MenuItem.OnMenuItemClickListener {
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnCreateContextMenuListener, MenuItem.OnMenuItemClickListener {
         public final View mView;
         public final TextView mIdView;
         public final TextView mContentView;
@@ -102,7 +103,14 @@ public class GenderRecyclerViewAdapter extends RecyclerView.Adapter<GenderRecycl
         @Override
         public boolean onMenuItemClick(MenuItem item) {
             if (item.getItemId() == 1) {
+                Intent intent = new Intent(mView.getContext(), GenderEditActivity.class);
+                intent.setAction(Intent.ACTION_EDIT);
+                intent.putExtra(GenderEntry.COLUMN_NAME_NAME, mItem.name);
+                intent.putExtra(GenderEntry.COLUMN_NAME_DESCRIPTION, mItem.description);
+                intent.putExtra(GenderEntry.COLUMN_NAME_ID, mItem.id);
 
+                Activity activity  = GenderRecyclerViewAdapter.this.mActivity;
+                activity.startActivityForResult(intent, 0);
             }
             else if (item.getItemId() == 2) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(mView.getContext());
@@ -135,7 +143,7 @@ public class GenderRecyclerViewAdapter extends RecyclerView.Adapter<GenderRecycl
                     }
                 });
 
-                        builder.create().show();
+                builder.create().show();
             }
 
             return false;

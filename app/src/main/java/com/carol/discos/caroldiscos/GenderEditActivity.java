@@ -25,10 +25,23 @@ public class GenderEditActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        Button btnOk = findViewById(R.id.button_ok);
+
+            Button btnOk = findViewById(R.id.button_ok);
 
         textName = findViewById(R.id.edit_gender_name);
         textDesc = findViewById(R.id.edit_gender_desc);
+
+        final Intent intent =  getIntent();
+
+        if (intent.getAction() == Intent.ACTION_EDIT) {
+            textName.setText(
+                    intent.getStringExtra(GenderDbHelper.GenderEntry.COLUMN_NAME_NAME)
+            );
+
+            textDesc.setText(
+                    intent.getStringExtra(GenderDbHelper.GenderEntry.COLUMN_NAME_DESCRIPTION)
+            );
+        }
 
         btnOk.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -38,11 +51,18 @@ public class GenderEditActivity extends AppCompatActivity {
 
                 GenderDbHelper helper = new GenderDbHelper(GenderEditActivity.this);
 
-                helper.insert(name, desc);
+                if (getIntent().getAction() == Intent.ACTION_INSERT) {
+                    helper.insert(name, desc);
+                }
+                else if (intent.getAction() == Intent.ACTION_EDIT) {
+                    long id = intent.getLongExtra(GenderDbHelper.GenderEntry.COLUMN_NAME_ID, 0);
 
-                GenderEditActivity.this.finish();
+                    helper.update(id, name, desc);
+                }
 
-          }
+                setResult(RESULT_OK);
+                finish();
+            }
         });
 
 
