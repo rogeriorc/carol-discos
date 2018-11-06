@@ -1,15 +1,21 @@
-package com.carol.discos.caroldiscos;
+package com.carol.discos.caroldiscos.ui;
 
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.support.v7.widget.RecyclerView;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.carol.discos.caroldiscos.GenderFragment.OnListFragmentInteractionListener;
 import com.carol.discos.caroldiscos.db.GenderDbHelper;
 import com.carol.discos.caroldiscos.db.GenderDbHelper.GenderEntry;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -20,17 +26,31 @@ import java.util.List;
 public class GenderRecyclerViewAdapter extends RecyclerView.Adapter<GenderRecyclerViewAdapter.ViewHolder> {
 
     private final List<GenderEntry> mValues;
-    private final OnListFragmentInteractionListener mListener;
+    private final Activity mActivity;
 
-    public GenderRecyclerViewAdapter(List<GenderEntry> items, OnListFragmentInteractionListener listener) {
+
+    public GenderRecyclerViewAdapter(List<GenderEntry> items, Activity activity) {
         mValues = items;
-        mListener = listener;
+        mActivity = activity;
+
+        this.notifyDataSetChanged();
     }
+
+    public void refresh() {
+        GenderDbHelper db = new GenderDbHelper(this.mActivity);
+        mValues.clear();
+        mValues.addAll(db.select());
+
+        this.notifyDataSetChanged();
+    }
+
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.fragment_gender, parent, false);
+        Context context = parent.getContext();
+        LayoutInflater inflater = LayoutInflater.from(context);
+        View view = inflater.inflate(android.R.layout.simple_list_item_2, parent, false);
+
         return new ViewHolder(view);
     }
 
@@ -39,17 +59,6 @@ public class GenderRecyclerViewAdapter extends RecyclerView.Adapter<GenderRecycl
         holder.mItem = mValues.get(position);
         holder.mIdView.setText(mValues.get(position).name);
         holder.mContentView.setText(mValues.get(position).description);
-
-        holder.mView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (null != mListener) {
-                    // Notify the active callbacks interface (the activity, if the
-                    // fragment is attached to one) that an item has been selected.
-                    mListener.onListFragmentInteraction(holder.mItem);
-                }
-            }
-        });
     }
 
     @Override
@@ -57,7 +66,7 @@ public class GenderRecyclerViewAdapter extends RecyclerView.Adapter<GenderRecycl
         return mValues.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder  implements View.OnCreateContextMenuListener, MenuItem.OnMenuItemClickListener {
         public final View mView;
         public final TextView mIdView;
         public final TextView mContentView;
@@ -66,13 +75,70 @@ public class GenderRecyclerViewAdapter extends RecyclerView.Adapter<GenderRecycl
         public ViewHolder(View view) {
             super(view);
             mView = view;
-            mIdView = (TextView) view.findViewById(R.id.item_number);
-            mContentView = (TextView) view.findViewById(R.id.content);
+
+            view.setOnCreateContextMenuListener(this);
+
+            mIdView = (TextView) view.findViewById(android.R.id.text1);
+            mContentView = (TextView) view.findViewById(android.R.id.text2);
         }
 
         @Override
         public String toString() {
             return super.toString() + " '" + mContentView.getText() + "'";
+        }
+
+        @Override
+        public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+            //menu.setHeaderTitle("Select The Action");
+
+            MenuItem edit = menu.add(0, 1, 0, "Edit");//groupId, itemId, order, title
+            MenuItem delete = menu.add(0, 2, 0, "Delete");
+
+
+            edit.setOnMenuItemClickListener(this);
+            delete.setOnMenuItemClickListener(this);
+        }
+
+        @Override
+        public boolean onMenuItemClick(MenuItem item) {
+            if (item.getItemId() == 1) {
+
+            }
+            else if (item.getItemId() == 2) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(mView.getContext());
+                builder.setTitle("Exclusao");
+                //define a mensagem
+                builder.setMessage("Deseja deletar o Genero '" + mItem.name + "'?");
+
+                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        GenderDbHelper db = new GenderDbHelper(mView.getContext());
+
+                        db.delete(mItem.id);
+                        db.close();
+
+                        GenderRecyclerViewAdapter adaptor = GenderRecyclerViewAdapter.this;
+
+                        adaptor.refresh();
+                    }
+                });
+
+                builder.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        GenderDbHelper db = new GenderDbHelper(mView.getContext());
+
+                        db.delete(mItem.id);
+                    }
+                });
+
+                        builder.create().show();
+            }
+
+            return false;
         }
     }
 }

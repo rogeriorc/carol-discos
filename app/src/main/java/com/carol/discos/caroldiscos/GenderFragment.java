@@ -10,24 +10,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.carol.discos.caroldiscos.dummy.DummyContent;
-import com.carol.discos.caroldiscos.dummy.DummyContent.DummyItem;
+import com.carol.discos.caroldiscos.db.GenderDbHelper;
+import com.carol.discos.caroldiscos.db.GenderDbHelper.GenderEntry;
+import com.carol.discos.caroldiscos.ui.GenderRecyclerViewAdapter;
 
-import java.util.List;
+import java.util.ArrayList;
 
-/**
- * A fragment representing a list of Items.
- * <p/>
- * Activities containing this fragment MUST implement the {@link OnListFragmentInteractionListener}
- * interface.
- */
 public class GenderFragment extends Fragment {
 
     // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";
     // TODO: Customize parameters
     private int mColumnCount = 1;
-    private OnListFragmentInteractionListener mListener;
+    public static GenderFragment instance;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -49,6 +44,7 @@ public class GenderFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        GenderFragment.instance = this;
 
         if (getArguments() != null) {
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
@@ -59,6 +55,9 @@ public class GenderFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_gender_list, container, false);
+        GenderDbHelper db = new GenderDbHelper(this.getActivity());
+
+        ArrayList<GenderEntry> items = db.select();
 
         // Set the adapter
         if (view instanceof RecyclerView) {
@@ -69,41 +68,15 @@ public class GenderFragment extends Fragment {
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            recyclerView.setAdapter(new MyGenderRecyclerViewAdapter(DummyContent.ITEMS, mListener));
+            recyclerView.setAdapter(new GenderRecyclerViewAdapter(items, this.getActivity()));
         }
         return view;
     }
 
 
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof OnListFragmentInteractionListener) {
-            mListener = (OnListFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnListFragmentInteractionListener");
-        }
+    public static void addGender() {
+
+
     }
 
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
-    }
-
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p/>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-    public interface OnListFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onListFragmentInteraction(DummyItem item);
-    }
 }
