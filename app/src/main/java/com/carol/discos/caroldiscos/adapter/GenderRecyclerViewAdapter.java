@@ -15,13 +15,12 @@ import android.widget.TextView;
 
 import com.carol.discos.caroldiscos.GenderEditActivity;
 import com.carol.discos.caroldiscos.db.GenderDbHelper;
-import com.carol.discos.caroldiscos.db.GenderDbHelper.GenderEntry;
+import com.carol.discos.caroldiscos.db.GenderEntry;
 
 import java.util.List;
 
 /**
- * {@link RecyclerView.Adapter} that can display a {@link DummyItem} and makes a call to the
- * specified {@link OnListFragmentInteractionListener}.
+ * {@link RecyclerView.Adapter} that can display a {@link GenderEntry} 
  * TODO: Replace the implementation with code for your data type.
  */
 public class GenderRecyclerViewAdapter extends RecyclerView.Adapter<GenderRecyclerViewAdapter.ViewHolder> {
