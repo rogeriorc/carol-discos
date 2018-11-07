@@ -10,35 +10,40 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".GenderListActivity"
-            android:label="Generos"
+            android:name=".MainActivity"
+            android:label="@string/title_activity_main"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".GenderListActivity"
+            android:label="Generos"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/AppTheme.NoActionBar">
         </activity>
         <activity
             android:name=".GenderEditActivity"
             android:label="@string/title_activity_gender_edit"
             android:parentActivityName=".GenderListActivity"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
             android:name=".AlbumListActivity"
             android:label="Albuns"
+            android:parentActivityName=".MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".AlbumEditActivity"
             android:label="@string/title_activity_album_edit"
             android:parentActivityName=".AlbumListActivity"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+
+
+        <activity android:name=".InfoActivity"
+            android:parentActivityName=".MainActivity"></activity>
     </application>
 
 </manifest>

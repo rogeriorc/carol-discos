@@ -88,8 +88,8 @@ public class GenderRecyclerViewAdapter extends RecyclerView.Adapter<GenderRecycl
         }
 
         @Override
+        //menu suspenso para editar e deletar o item da lista
         public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-            //menu.setHeaderTitle("Select The Action");
 
             MenuItem edit = menu.add(0, 1, 0, "Edit");//groupId, itemId, order, title
             MenuItem delete = menu.add(0, 2, 0, "Delete");

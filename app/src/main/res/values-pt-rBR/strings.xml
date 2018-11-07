@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Carol Discos</string>
+    <string name="action_settings">Configurações</string>
+    <string name="about">Sobre</string>
+    <string name="pink">Fundo Rosa</string>
+    <string name="text">Esse App foi desenvolvido para permitir que você agrupe seus discos favoritos!</string>
+    <string name="white">Fundo Branco</string>
+    <string name="teacher">Professor: Alexandre Rômulo Feitosa</string>
+    <string name="information">Informações</string>
+    <string name="student">Estudante: Carolina Lourenço dos Santos</string>
+</resources>
